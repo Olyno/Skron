@@ -1,0 +1,6 @@
+name: Skron
+description: Connect github and skript!
+author: AlexLew
+version: 1.0
+main: com.alexlew.skron.Skron
+depend: [Skript]
