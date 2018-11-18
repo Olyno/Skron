@@ -10,18 +10,18 @@ import com.alexlew.skron.util.EffectSection;
 import org.bukkit.event.Event;
 
 @Name("Scope Repository Creation")
-@Description("Scope for Repository creation")
+@Description("Scope for repository creation")
 @Examples({
-        "make new Repository:",
-        "\tset the name of the Repository to \"My Repository\"",
-        "\tset the description of the Repository to \"receiver@gmail.com\"",
-        "\tset the home page of the Repository to \"Put a url here\"",
-        "\tset the issue tracker state of the Repository to true",
-        "\tset the downloadable state of the Repository to true",
-        "\tset the wiki state of the Repository to false",
-        "\tset the private state of the Repository to false ",
-        "\tset the auto init state of the Repository to true",
-        "\tcreate the Repository"
+        "make new repository:",
+        "\tset the name of the repository to \"My Repository\"",
+        "\tset the description of the repository to \"receiver@gmail.com\"",
+        "\tset the home page of the repository to \"Put a url here\"",
+        "\tset the issue tracker state of the repository to true",
+        "\tset the downloadable state of the repository to true",
+        "\tset the wiki state of the repository to false",
+        "\tset the private state of the repository to false ",
+        "\tset the auto init state of the repository to true",
+        "\tcreate the repository"
 })
 @Since("1.0")
 
@@ -31,7 +31,7 @@ public class ScopeNewRepo extends EffectSection {
 
     static {
         Skript.registerCondition(ScopeNewRepo.class,
-                "(make|do|create) [new] repo[sitory]");
+                "(make|do|create) [a] [new] repo[sitory]");
     }
 
     @Override
@@ -54,6 +54,6 @@ public class ScopeNewRepo extends EffectSection {
 
     @Override
     public String toString( Event e, boolean debug ) {
-        return "make new Repository";
+        return "make new repository";
     }
 }

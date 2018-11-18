@@ -6,11 +6,11 @@ import ch.njol.skript.expressions.base.SimplePropertyExpression;
 import com.alexlew.skron.types.Repository;
 import org.bukkit.event.Event;
 
-@Name("Issue tracker state of Repository")
-@Description("Returns the issue tracker state of a Repository. Can be set in a Repository scope")
+@Name("Issue tracker state of repository")
+@Description("Returns the issue tracker state of a repository. Can be set in a repository scope")
 @Examples({
-        "make new Repository:",
-        "\tset issue tracker state of Repository to true"
+        "make new repository:",
+        "\tset issue tracker state of repository to true"
 })
 @Since("1.0")
 
@@ -18,7 +18,7 @@ public class ExprIssueTrackerStateOfRepository extends SimplePropertyExpression<
 
     static {
         register(ExprIssueTrackerStateOfRepository.class, Boolean.class,
-                "issue tracker state", "repository");
+                "[the] issue tracker state", "repositorybuilder");
     }
 
     @Override
@@ -29,7 +29,7 @@ public class ExprIssueTrackerStateOfRepository extends SimplePropertyExpression<
     @Override
     public Class<?>[] acceptChange(final ChangeMode mode) {
         if (mode == ChangeMode.SET || mode == ChangeMode.DELETE) {
-            return new Class[]{String.class};
+            return new Class[]{Boolean.class};
         }
         return null;
     }

@@ -9,11 +9,11 @@ import ch.njol.skript.expressions.base.SimplePropertyExpression;
 import com.alexlew.skron.types.Repository;
 import org.bukkit.event.Event;
 
-@Name("Downloadable state of Repository")
-@Description("Returns the downloadable state of a Repository. Can be set in a Repository scope")
+@Name("Downloadable state of repository")
+@Description("Returns the downloadable state of a repository. Can be set in a repository scope")
 @Examples({
-        "make new Repository:",
-        "\tset downloadable state of Repository to true"
+        "make new repository:",
+        "\tset downloadable state of repository to true"
 })
 @Since("1.0")
 
@@ -21,7 +21,7 @@ public class ExprDownloadableStateOfRepository extends SimplePropertyExpression<
 
     static {
         register(ExprDownloadableStateOfRepository.class, Boolean.class,
-                "downloadable state", "repository");
+                "[the] downloadable state", "repositorybuilder");
     }
 
     @Override

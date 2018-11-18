@@ -8,50 +8,48 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
-import com.alexlew.skron.scopes.ScopeNewRepo;
-import com.alexlew.skron.types.Repository;
-import com.alexlew.skron.util.EffectSection;
+import com.alexlew.skron.Skron;
+import com.alexlew.skron.effects.EffLogin;
 import org.bukkit.event.Event;
+import org.kohsuke.github.GHRepository;
+
+import java.io.IOException;
 
 @Name("Repository expression")
-@Description("If it isn't inside an Repository creation scope, this expression returns a new Repository. " +
-        "If it is inside of an Repository creation scope, it returns the Repository that belongs to that scope.")
+@Description("Return a repository if you precise the name of the repository.")
 @Examples({
-        "# outside a scope",
-        "",
-        "set {_e} to a new Repository",
-        "",
-        "# or in a scope",
-        "",
-        "make a new Repository:",
-        "\tset the name of the Repository to \"My Repository\"",
-        "\tset the description of the Repository to \"receiver@gmail.com\"",
-        "\tset the private state of the Repository to false ",
-        "\tset the auto init state of the Repository to true",
-        "set {_email} to last Repository"
+        "set {_repository} to repository \"Test\""
 })
 @Since("1.0")
 
-public class ExprRepository extends SimpleExpression<Repository> {
+public class ExprRepository extends SimpleExpression<GHRepository> {
 
     static {
-        Skript.registerExpression(ExprRepository.class, Repository.class, ExpressionType.SIMPLE,
-                "[(the|an|[a] new)] repo[sitory]");
+        Skript.registerExpression(ExprRepository.class, GHRepository.class, ExpressionType.SIMPLE,
+                "[(the|an|[a] new)] repo[sitory] [with name] %-string%");
     }
 
-    private Boolean scope = false;
+    private Expression<String> repository;
 
     @Override
-    public boolean init( Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult ) {
-        scope = EffectSection.isCurrentSection(ScopeNewRepo.class);
-        return scope;
+    public boolean init( Expression<?>[] expr, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult ) {
+        repository = (Expression<String>) expr[0];
+        return true;
     }
 
     @Override
-    protected Repository[] get( Event e ) {
-        return new Repository[]{
-                scope ? ScopeNewRepo.lastRepository : new Repository()
-        };
+    protected GHRepository[] get( Event e ) {
+        GHRepository repo = null;
+        try {
+            repo = repository.getSingle(e).contains("/") ?
+                    EffLogin.account.getRepository(repository.getSingle(e)) :
+                    EffLogin.account.getMyself().getRepository(repository.getSingle(e));
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        } catch (NullPointerException e1) {
+            Skron.error("You must to be login to your account before use it.");
+        }
+        return new GHRepository[] {repo};
     }
 
     @Override
@@ -60,13 +58,13 @@ public class ExprRepository extends SimpleExpression<Repository> {
     }
 
     @Override
-    public Class<? extends Repository> getReturnType() {
-        return Repository.class;
+    public Class<? extends GHRepository> getReturnType() {
+        return GHRepository.class;
     }
 
     @Override
     public String toString( Event e, boolean debug ) {
-        return "the Repository";
+        return "the repository " + repository.getSingle(e);
     }
 
 }

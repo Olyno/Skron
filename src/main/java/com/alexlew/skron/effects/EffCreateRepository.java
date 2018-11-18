@@ -11,6 +11,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import org.kohsuke.github.GHCreateRepositoryBuilder;
+import org.kohsuke.github.GHRepository;
 
 import java.io.IOException;
 
@@ -25,15 +26,16 @@ public class EffCreateRepository extends Effect {
 
     static {
         Skript.registerEffect(EffCreateRepository.class,
-                "create %Repository% [(with|in) [organization] %-string%]");
+                "create %repositorybuilder% [(with|in) [organization] %-string%]");
     }
+
+    public static GHRepository lastRepository;
 
     private Expression<Repository> repository;
     private Expression<String> organization;
 
     private GHCreateRepositoryBuilder builder;
 
-    @SuppressWarnings("unchecked")
     @Override
     public boolean init(Expression<?>[] expr, int arg1, Kleenean arg2, ParseResult arg3) {
         repository = (Expression<Repository>) expr[0];
@@ -43,10 +45,10 @@ public class EffCreateRepository extends Effect {
 
     @Override
     protected void execute(Event e)  {
-        //TODO Refaire le système de création de repository, de façon à utiliser un repo builder et non un type custom.
         String name = repository.getSingle(e).getName().replaceAll(" ", "") == "" ? null : repository.getSingle(e).getName();
         String description = repository.getSingle(e).getDescription() == null ? "" : repository.getSingle(e).getDescription();
         Object homepage = repository.getSingle(e).getHomepage() != null ? repository.getSingle(e).getHomepage() : "";
+        Boolean withIssues = repository.getSingle(e).getIssueTrackerState() != null ? repository.getSingle(e).getIssueTrackerState() : false;
         Boolean withWiki = repository.getSingle(e).getWikiState() != null ? repository.getSingle(e).getWikiState() : false;
         Boolean isDownloadable = repository.getSingle(e).getDownloadableState() != null ? repository.getSingle(e).getDownloadableState() : true;
         Boolean isPrivate = repository.getSingle(e).getPrivateState() != null ? repository.getSingle(e).getPrivateState() : false;
@@ -64,14 +66,19 @@ public class EffCreateRepository extends Effect {
 
         } else {
             if (name.replaceAll(" ", "") != "") {
-                builder = EffLogin.account.createRepository(name);
+                if (EffLogin.account != null) {
+                    builder = EffLogin.account.createRepository(name);
+                } else {
+                    Skron.error("You must to be login before do something.");
+                }
+
             }
         }
 
         builder.private_(isPrivate)
                 .autoInit(isInit)
                 .homepage((String) homepage)
-                .issues(false)
+                .issues(withIssues)
                 .downloads(isDownloadable)
                 .wiki(withWiki);
 
@@ -79,9 +86,10 @@ public class EffCreateRepository extends Effect {
             builder.description(description);
         }
         try {
-            builder.create();
+            lastRepository = builder.create();
         } catch (IOException e1) {
-            e1.printStackTrace();
+            //e1.printStackTrace();
+            Skron.error("A repository with the name \"" + name + "\" already exist, try another name.");
         }
 
     }

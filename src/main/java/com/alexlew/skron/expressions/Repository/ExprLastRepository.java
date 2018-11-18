@@ -7,21 +7,21 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
-import com.alexlew.skron.scopes.ScopeNewRepo;
-import com.alexlew.skron.types.Repository;
+import com.alexlew.skron.effects.EffCreateRepository;
 import org.bukkit.event.Event;
+import org.kohsuke.github.GHRepository;
 
-@Name("Last Repository")
-@Description("Returns the last Repository. It's set in a Repository scope")
+@Name("Last repository")
+@Description("Returns the last repository")
 @Examples({
-        "create last Repository"
+        "set {_issues::*} to issues of last repository"
 })
 @Since("1.0")
 
-public class ExprLastRepository extends SimpleExpression<Repository> {
+public class ExprLastRepository extends SimpleExpression<GHRepository> {
 
     static {
-        Skript.registerExpression(ExprLastRepository.class, Repository.class,
+        Skript.registerExpression(ExprLastRepository.class, GHRepository.class,
                 ExpressionType.SIMPLE, "[the] last[ly] repo[sitory]");
     }
 
@@ -31,8 +31,8 @@ public class ExprLastRepository extends SimpleExpression<Repository> {
     }
 
     @Override
-    protected Repository[] get( Event e ) {
-        return new Repository[] {ScopeNewRepo.lastRepository};
+    protected GHRepository[] get( Event e ) {
+        return new GHRepository[] {EffCreateRepository.lastRepository};
     }
 
     @Override
@@ -41,12 +41,12 @@ public class ExprLastRepository extends SimpleExpression<Repository> {
     }
 
     @Override
-    public Class<? extends Repository> getReturnType() {
-        return Repository.class;
+    public Class<? extends GHRepository> getReturnType() {
+        return GHRepository.class;
     }
 
     @Override
     public String toString( Event e, boolean debug ) {
-        return "last Repository";
+        return "last repository";
     }
 }

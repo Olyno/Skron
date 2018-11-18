@@ -1,24 +1,20 @@
 package com.alexlew.skron.expressions.Repository;
 
-import ch.njol.skript.Skript;
 import ch.njol.skript.doc.*;
 import ch.njol.skript.expressions.base.SimplePropertyExpression;
 import ch.njol.skript.lang.Expression;
-import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
-import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import com.alexlew.skron.effects.EffLogin;
 import com.alexlew.skron.types.Repository;
-import org.bukkit.event.Event;
 import org.kohsuke.github.GHRepository;
 
 import java.io.IOException;
 
-@Name("Owner of Repository")
-@Description("Returns the owner of a Repository")
+@Name("Owner of repository")
+@Description("Returns the owner of a repository")
 @Examples({
-        "set {_owner} to owner of last Repository"
+        "set {_owner} to owner of last repository"
 })
 @Since("1.0")
 
@@ -26,7 +22,7 @@ public class ExprOwnerOfRepository extends SimplePropertyExpression<Object, Stri
 
     static {
         register(ExprOwnerOfRepository.class, String.class,
-                "owner", "repository");
+                "[the] owner", "repository");
     }
 
     private Expression<Object> repository;

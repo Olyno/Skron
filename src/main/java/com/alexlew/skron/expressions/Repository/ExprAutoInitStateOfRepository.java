@@ -9,11 +9,11 @@ import ch.njol.skript.expressions.base.SimplePropertyExpression;
 import com.alexlew.skron.types.Repository;
 import org.bukkit.event.Event;
 
-@Name("Auto init state of Repository")
-@Description("Returns the auto init state of a Repository. Can be set in a Repository scope")
+@Name("Auto init state of repository")
+@Description("Returns the auto init state of a repository. Can be set in a repository scope")
 @Examples({
-        "make new Repository:",
-        "\tset auto init state of Repository to true"
+        "make new repository:",
+        "\tset auto init state of repository to true"
 })
 @Since("1.0")
 
@@ -21,7 +21,7 @@ public class ExprAutoInitStateOfRepository extends SimplePropertyExpression<Repo
 
     static {
         register(ExprAutoInitStateOfRepository.class, Boolean.class,
-                "[auto] init state", "repository");
+                "[the] [auto] init state", "repositorybuilder");
     }
 
     @Override
@@ -32,7 +32,7 @@ public class ExprAutoInitStateOfRepository extends SimplePropertyExpression<Repo
     @Override
     public Class<?>[] acceptChange(final ChangeMode mode) {
         if (mode == ChangeMode.SET || mode == ChangeMode.DELETE) {
-            return new Class[]{String.class};
+            return new Class[]{Boolean.class};
         }
         return null;
     }

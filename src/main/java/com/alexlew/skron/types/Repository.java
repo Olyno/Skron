@@ -4,16 +4,16 @@ import ch.njol.skript.classes.ClassInfo;
 import ch.njol.skript.classes.Parser;
 import ch.njol.skript.lang.ParseContext;
 import ch.njol.skript.registrations.Classes;
+import org.kohsuke.github.GHRepository;
 
 import java.net.URL;
 
 public class Repository {
 
     static {
-        //TODO Refaire le type Repository (à supprimer)
-        Classes.registerClass(new ClassInfo<Repository>(Repository.class, "repository")
-                .user("repository")
-                .name("repository")
+        Classes.registerClass(new ClassInfo<Repository>(Repository.class, "repositorybuilder")
+                .user("repositorybuilder")
+                .name("repositorybuilder")
                 .parser(new Parser<Repository>() {
 
                     @Override
@@ -37,10 +37,38 @@ public class Repository {
                     }
 
                 }));
+
+        Classes.registerClass(new ClassInfo<GHRepository>(GHRepository.class, "repository")
+                .user("repository")
+                .name("repository")
+                .parser(new Parser<GHRepository>() {
+
+                    @Override
+                    public String getVariableNamePattern() {
+                        return ".+";
+                    }
+
+                    @Override
+                    public GHRepository parse(String arg0, ParseContext arg1) {
+                        return null;
+                    }
+
+                    @Override
+                    public String toString(GHRepository arg0, int arg1) {
+                        return null;
+                    }
+
+                    @Override
+                    public String toVariableNameString(GHRepository arg0) {
+                        return null;
+                    }
+
+                }));
     }
 
     private String name;
     private String description;
+    private String licenceTemplate;
     private Object homepage;
     private Boolean downloadableState;
     private Boolean issueTrackerState;
@@ -115,5 +143,13 @@ public class Repository {
 
     public void setWikiState( Boolean wikiState ) {
         this.wikiState = wikiState;
+    }
+
+    public String getLicenceTemplate() {
+        return licenceTemplate;
+    }
+
+    public void setLicenceTemplate( String licenceTemplate ) {
+        this.licenceTemplate = licenceTemplate;
     }
 }

@@ -9,11 +9,11 @@ import ch.njol.skript.expressions.base.SimplePropertyExpression;
 import com.alexlew.skron.types.Repository;
 import org.bukkit.event.Event;
 
-@Name("Home page of Repository")
-@Description("Returns the home page of a Repository. Can be set in a Repository scope")
+@Name("Home page of repository")
+@Description("Returns the home page of a repository. Can be set in a repository scope")
 @Examples({
-        "make new Repository:",
-        "\tset home page of Repository to \"My home page link\""
+        "make new repository:",
+        "\tset home page of repository to \"My home page link\""
 })
 @Since("1.0")
 
@@ -21,7 +21,7 @@ public class ExprHomepageOfRepository extends SimplePropertyExpression<Repositor
 
     static {
         register(ExprHomepageOfRepository.class, String.class,
-                "home page", "repository");
+                "[the] home page", "repositorybuilder");
     }
 
     @Override

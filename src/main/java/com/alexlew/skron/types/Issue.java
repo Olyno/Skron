@@ -6,6 +6,7 @@ import ch.njol.skript.lang.ParseContext;
 import ch.njol.skript.registrations.Classes;
 import org.kohsuke.github.GHIssue;
 import org.kohsuke.github.GHIssueState;
+import org.kohsuke.github.GHUser;
 
 public class Issue {
     static {
@@ -63,4 +64,6 @@ public class Issue {
 
                 }));
     }
+
+
 }

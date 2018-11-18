@@ -24,7 +24,7 @@ public class ExprIssueOpened extends SimpleExpression<GHIssueState> {
 
     static {
         Skript.registerExpression(ExprIssueOpened.class, GHIssueState.class, ExpressionType.SIMPLE,
-                "issues opened");
+                          "[all] open issues");
     }
 
     @Override

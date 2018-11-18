@@ -7,11 +7,11 @@ import org.bukkit.event.Event;
 import ch.njol.skript.classes.Changer.ChangeMode;
 import ch.njol.skript.doc.*;
 
-@Name("Name of Repository")
-@Description("Returns the name of a Repository. Can be set in a Repository scope")
+@Name("Name of repository")
+@Description("Returns the name of a repository. Can be set in a repository scope")
 @Examples({
-        "make new Repository:",
-        "\tset name of Repository to \"My Repository\""
+        "make new repository:",
+        "\tset name of repository to \"My Repository\""
 })
 @Since("1.0")
 
@@ -19,7 +19,7 @@ public class ExprNameOfRepository extends SimplePropertyExpression<Repository, S
 
     static {
         register(ExprNameOfRepository.class, String.class,
-                "name", "repository");
+                "[the] name", "repositorybuilder");
     }
 
     @Override

@@ -9,11 +9,11 @@ import ch.njol.skript.expressions.base.SimplePropertyExpression;
 import com.alexlew.skron.types.Repository;
 import org.bukkit.event.Event;
 
-@Name("Wiki state of Repository")
-@Description("Returns the wiki state of a Repository. Can be set in a Repository scope")
+@Name("Wiki state of repository")
+@Description("Returns the wiki state of a repository. Can be set in a repository scope")
 @Examples({
-        "make new Repository:",
-        "\tset wiki state of Repository to false"
+        "make new repository:",
+        "\tset wiki state of repository to false"
 })
 @Since("1.0")
 
@@ -21,7 +21,7 @@ public class ExprWikiStateOfRepository extends SimplePropertyExpression<Reposito
 
     static {
         register(ExprWikiStateOfRepository.class, Boolean.class,
-                "wiki state", "Repository");
+                "[the] wiki state", "repositorybuilder");
     }
 
     @Override

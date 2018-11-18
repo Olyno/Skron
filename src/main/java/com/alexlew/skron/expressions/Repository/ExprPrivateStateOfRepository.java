@@ -9,11 +9,11 @@ import ch.njol.skript.expressions.base.SimplePropertyExpression;
 import com.alexlew.skron.types.Repository;
 import org.bukkit.event.Event;
 
-@Name("Private state of Repository")
-@Description("Returns the private state of a Repository. Can be set in a Repository scope")
+@Name("Private state of repository")
+@Description("Returns the private state of a repository. Can be set in a repository scope")
 @Examples({
-        "make new Repository:",
-        "\tset private state of Repository to true"
+        "make new repository:",
+        "\tset private state of repository to true"
 })
 @Since("1.0")
 
@@ -21,7 +21,7 @@ public class ExprPrivateStateOfRepository extends SimplePropertyExpression<Repos
 
     static {
         register(ExprPrivateStateOfRepository.class, Boolean.class,
-                "private state", "repository");
+                "[the] private state", "repositorybuilder");
     }
 
     @Override
@@ -32,7 +32,7 @@ public class ExprPrivateStateOfRepository extends SimplePropertyExpression<Repos
     @Override
     public Class<?>[] acceptChange(final ChangeMode mode) {
         if (mode == ChangeMode.SET || mode == ChangeMode.DELETE) {
-            return new Class[]{String.class};
+            return new Class[]{Boolean.class};
         }
         return null;
     }

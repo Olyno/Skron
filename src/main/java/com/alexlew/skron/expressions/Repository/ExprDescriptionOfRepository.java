@@ -9,11 +9,11 @@ import ch.njol.skript.expressions.base.SimplePropertyExpression;
 import com.alexlew.skron.types.Repository;
 import org.bukkit.event.Event;
 
-@Name("Description of Repository")
-@Description("Returns the description of a Repository. Can be set in a Repository scope")
+@Name("Description of repository")
+@Description("Returns the description of a repository. Can be set in a repository scope")
 @Examples({
-        "make new Repository:",
-        "\tset description of Repository to \"My Repository\""
+        "make new repository:",
+        "\tset description of repository to \"My Repository\""
 })
 @Since("1.0")
 
@@ -21,7 +21,7 @@ public class ExprDescriptionOfRepository extends SimplePropertyExpression<Reposi
 
     static {
         register(ExprDescriptionOfRepository.class, String.class,
-                "description", "Repository");
+                "[the] description", "repositorybuilder");
     }
 
     @Override
