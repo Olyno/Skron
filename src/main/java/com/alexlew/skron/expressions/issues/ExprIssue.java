@@ -53,7 +53,7 @@ public class ExprIssue extends SimpleExpression<GHIssue> {
     @Override
     protected GHIssue[] get( Event e ) {
         return new GHIssue[] {
-                scope ? ScopeNewIssue.lastIssue : new GHIssue()
+                new GHIssue()
         };
     }
 
