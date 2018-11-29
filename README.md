@@ -1,3 +1,5 @@
+![](https://travis-ci.org/AlexLew95/Skron.svg?branch=master)
+
 # Skron
 Skript addon to connect github and skript!
 
