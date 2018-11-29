@@ -1,61 +1,61 @@
-package com.alexlew.skron.expressions.Repository;
+package com.alexlew.skron.expressions.Repository.issues;
+
 
 import ch.njol.skript.Skript;
-import ch.njol.skript.doc.*;
+import ch.njol.skript.doc.Description;
+import ch.njol.skript.doc.Examples;
+import ch.njol.skript.doc.Name;
+import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
-import com.alexlew.skron.Skron;
 import org.bukkit.event.Event;
 import org.kohsuke.github.GHIssue;
-import org.kohsuke.github.GHIssueState;
 import org.kohsuke.github.GHRepository;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
-@Name("Issues of repository")
-@Description("Returns the issues of a repository")
+@Name("Issue with id")
+@Description("Return an issue from its id")
 @Examples({
-        "set {_issues::*} to issues from last repository"
+        "command issue:",
+        "\ttrigger:",
+        "\t\tset {_issue} to issue with id 5 from last repository"
 })
 @Since("1.0")
 
-public class ExprIssuesOfRepository extends SimpleExpression<GHIssue> {
+public class ExprIssueWithId extends SimpleExpression<GHIssue> {
 
     static {
-        Skript.registerExpression(ExprIssuesOfRepository.class, GHIssue.class,
-                ExpressionType.SIMPLE, "[skron] %issuestate% (from|of) %repository%");
+        Skript.registerExpression(ExprIssueWithId.class, GHIssue.class, ExpressionType.SIMPLE,
+                "[the] [skron] issue [with id] %integer% (of|from) %repository%");
     }
 
-    private Expression<GHIssueState> issueType;
+    private Expression<Integer> issueId;
     private Expression<GHRepository> repository;
 
     @Override
     public boolean init( Expression<?>[] expr, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult ) {
-        issueType = (Expression<GHIssueState>) expr[0];
+        issueId = (Expression<Integer>) expr[0];
         repository = (Expression<GHRepository>) expr[1];
         return true;
     }
 
     @Override
     protected GHIssue[] get( Event e ) {
-        List<GHIssue> issues = new ArrayList<GHIssue>();
         try {
-            issues = repository.getSingle(e)
-                    .getIssues(issueType.getSingle(e));
+            return new GHIssue[] {repository.getSingle(e).getIssue(issueId.getSingle(e))};
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-        return issues.toArray(new GHIssue[issues.size()]);
+        return null;
     }
 
     @Override
     public boolean isSingle() {
-        return false;
+        return true;
     }
 
     @Override
@@ -65,7 +65,7 @@ public class ExprIssuesOfRepository extends SimpleExpression<GHIssue> {
 
     @Override
     public String toString( Event e, boolean debug ) {
-        return "issues";
+        return "the issue with id " + issueId.getSingle(e);
     }
 
 }

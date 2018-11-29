@@ -22,7 +22,7 @@ public class ExprOwnerOfRepository extends SimplePropertyExpression<Object, Stri
 
     static {
         register(ExprOwnerOfRepository.class, String.class,
-                "[the] owner", "repository");
+                "[the] [skron] owner", "repository");
     }
 
     private Expression<Object> repository;

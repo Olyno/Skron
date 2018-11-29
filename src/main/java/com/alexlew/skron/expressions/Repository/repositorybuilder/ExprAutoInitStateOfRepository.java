@@ -1,4 +1,4 @@
-package com.alexlew.skron.expressions.Repository;
+package com.alexlew.skron.expressions.Repository.repositorybuilder;
 
 import ch.njol.skript.classes.Changer.ChangeMode;
 import ch.njol.skript.doc.Description;
@@ -9,30 +9,30 @@ import ch.njol.skript.expressions.base.SimplePropertyExpression;
 import com.alexlew.skron.types.Repository;
 import org.bukkit.event.Event;
 
-@Name("Licence template of repository")
-@Description("Returns the licence template of a repository. Can be set in a repository builder scope")
+@Name("Auto init state of repository")
+@Description("Returns the auto init state of a repository. Can be set in a repository scope")
 @Examples({
         "make new repository:",
-        "\tset licence template of repository to \"afl-3.0\""
+        "\tset auto init state of repository to true"
 })
 @Since("1.0")
 
-public class ExprLicenceTemplateOfRepository extends SimplePropertyExpression<Repository, String> {
+public class ExprAutoInitStateOfRepository extends SimplePropertyExpression<Repository, Boolean> {
 
     static {
-        register(ExprLicenceTemplateOfRepository.class, String.class,
-                "[the] [skron] licence template", "repositorybuilder");
+        register(ExprAutoInitStateOfRepository.class, Boolean.class,
+                "[the] [skron] [auto] init state", "repositorybuilder");
     }
 
     @Override
-    public String convert(Repository repo) {
-        return (String) repo.getLicenceTemplate();
+    public Boolean convert(Repository repo) {
+        return repo.getInitState();
     }
 
     @Override
     public Class<?>[] acceptChange(final ChangeMode mode) {
         if (mode == ChangeMode.SET || mode == ChangeMode.DELETE) {
-            return new Class[]{String.class};
+            return new Class[]{Boolean.class};
         }
         return null;
     }
@@ -42,10 +42,10 @@ public class ExprLicenceTemplateOfRepository extends SimplePropertyExpression<Re
         for (Repository repo : getExpr().getArray(e)) {
             switch (mode) {
                 case SET:
-                    repo.setLicenceTemplate((String) delta[0]);
+                    repo.setInitState((Boolean) delta[0]);
                     break;
                 case DELETE:
-                    repo.setLicenceTemplate(null);
+                    repo.setInitState(null);
                     break;
                 default:
                     break;
@@ -55,11 +55,11 @@ public class ExprLicenceTemplateOfRepository extends SimplePropertyExpression<Re
 
     @Override
     protected String getPropertyName() {
-        return "home page";
+        return "auto init state";
     }
 
     @Override
-    public Class<? extends String> getReturnType() {
-        return String.class;
+    public Class<? extends Boolean> getReturnType() {
+        return Boolean.class;
     }
 }

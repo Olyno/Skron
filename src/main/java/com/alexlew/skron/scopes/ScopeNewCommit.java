@@ -8,30 +8,28 @@ import ch.njol.skript.doc.Since;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.util.Kleenean;
-import com.alexlew.skron.types.Issue;
-import com.alexlew.skron.types.Repository;
 import com.alexlew.skron.util.EffectSection;
 import org.bukkit.event.Event;
 import org.kohsuke.github.GHIssue;
 
-@Name("Scope Issue Creation")
-@Description("Scope for issue creation")
+@Name("Scope COmmit Creation")
+@Description("Scope for commit creation")
 @Examples({
-        "make new issue:",
-        "\tset the repository of the issue builder to repository \"My Repository\"",
-        "\tset the body of the issue builder to \"Look my issue, how my issue is beautiful?\"",
-        "\tset the label of the issue builder to \"Test\"",
-        "\tset the assignee user of the issue builder to github user \"AlexLew95\"",
-        "\tcreate the issue builder"
+        "make new commit:",
+        "\tset the repository of the commit to repository \"My Repository\"",
+        "\tset the author of the commit to author with name \"AlexLew95\" and email \"myemail@gmail.com\"",
+        "\tset the committer of the commit to committer with name \"AlexLew95\" and email \"myemail@gmail.com\"",
+        "\tset the message of the commit to github user \"AlexLew95\"",
+        "\tcreate the issue"
 })
 @Since("1.0")
 
-public class ScopeNewIssue extends EffectSection {
+public class ScopeNewCommit extends EffectSection {
 
-    public static Issue lastIssue;
+    public static GHIssue lastIssue;
 
     static {
-        Skript.registerCondition(ScopeNewIssue.class,
+        Skript.registerCondition(ScopeNewCommit.class,
                 "(make|do|create) [a] [new] [skron] issue");
     }
 
@@ -49,7 +47,7 @@ public class ScopeNewIssue extends EffectSection {
 
     @Override
     protected void execute( Event e ) {
-        lastIssue = new Issue();
+        lastIssue = new GHIssue();
         runSection(e);
     }
 

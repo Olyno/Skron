@@ -13,15 +13,15 @@ import org.bukkit.event.Event;
 @Description("Scope for repository creation")
 @Examples({
         "make new repository:",
-        "\tset the name of the repository to \"My Repository\"",
-        "\tset the description of the repository to \"receiver@gmail.com\"",
-        "\tset the home page of the repository to \"Put a url here\"",
-        "\tset the issue tracker state of the repository to true",
-        "\tset the downloadable state of the repository to true",
-        "\tset the wiki state of the repository to false",
-        "\tset the private state of the repository to false ",
-        "\tset the auto init state of the repository to true",
-        "\tcreate the repository"
+        "\tset the name of the repository builder to \"My Repository\"",
+        "\tset the description of the repository builder to \"receiver@gmail.com\"",
+        "\tset the home page of the repository builder to \"Put a url here\"",
+        "\tset the issue tracker state of the repository builder to true",
+        "\tset the downloadable state of the repository builder to true",
+        "\tset the wiki state of the repository builder to false",
+        "\tset the private state of the repository builder to false ",
+        "\tset the auto init state of the repository builder to true",
+        "\tcreate the repository builder"
 })
 @Since("1.0")
 
@@ -31,7 +31,7 @@ public class ScopeNewRepo extends EffectSection {
 
     static {
         Skript.registerCondition(ScopeNewRepo.class,
-                "(make|do|create) [a] [new] repo[sitory]");
+                "(make|do|create) [a] [new] [skron] repo[sitory]");
     }
 
     @Override

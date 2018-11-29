@@ -9,6 +9,7 @@ import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
 import com.alexlew.skron.Skron;
+import com.alexlew.skron.effects.EffCreateRepository;
 import com.alexlew.skron.effects.EffLogin;
 import org.bukkit.event.Event;
 import org.kohsuke.github.GHRepository;
@@ -26,7 +27,7 @@ public class ExprRepository extends SimpleExpression<GHRepository> {
 
     static {
         Skript.registerExpression(ExprRepository.class, GHRepository.class, ExpressionType.SIMPLE,
-                "[(the|an|[a] new)] repo[sitory] [with name] %-string%");
+                "[the] [skron] repo[sitory] [(with name|named)] %string%");
     }
 
     private Expression<String> repository;
@@ -44,6 +45,9 @@ public class ExprRepository extends SimpleExpression<GHRepository> {
             repo = repository.getSingle(e).contains("/") ?
                     EffLogin.account.getRepository(repository.getSingle(e)) :
                     EffLogin.account.getMyself().getRepository(repository.getSingle(e));
+            if (repo != null) {
+                EffCreateRepository.lastRepository = repo;
+            }
         } catch (IOException e1) {
             e1.printStackTrace();
         } catch (NullPointerException e1) {

@@ -28,7 +28,7 @@ public class ExprGistById extends SimpleExpression<GHGist> {
 
     static {
         Skript.registerExpression(ExprGistById.class, GHGist.class, ExpressionType.SIMPLE,
-                "gist [(by|with) id] %string%"
+                "[skron] gist [(by|with) id] %string%"
         );
     }
 

@@ -26,8 +26,8 @@ public class ExprCollaboratorsOfRepository extends SimpleExpression<GHUser> {
 
     static {
         Skript.registerExpression(ExprCollaboratorsOfRepository.class, GHUser.class,
-                ExpressionType.SIMPLE,"[the] collaborators of %repository%",
-                                                "[the] %repository%'s collaborators"
+                ExpressionType.SIMPLE,"[the] [skron] collaborators of %repository%",
+                                                "[the] %repository%'s [skron] collaborators"
         );
     }
 

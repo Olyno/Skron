@@ -22,7 +22,7 @@ public class ExprLastRepository extends SimpleExpression<GHRepository> {
 
     static {
         Skript.registerExpression(ExprLastRepository.class, GHRepository.class,
-                ExpressionType.SIMPLE, "[the] last[ly] repo[sitory]");
+                ExpressionType.SIMPLE, "[the] [skron] last[ly] repo[sitory]");
     }
 
     @Override

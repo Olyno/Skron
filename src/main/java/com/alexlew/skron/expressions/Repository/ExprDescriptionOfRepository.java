@@ -8,25 +8,39 @@ import ch.njol.skript.doc.Since;
 import ch.njol.skript.expressions.base.SimplePropertyExpression;
 import com.alexlew.skron.types.Repository;
 import org.bukkit.event.Event;
+import org.kohsuke.github.GHRepository;
 
 @Name("Description of repository")
 @Description("Returns the description of a repository. Can be set in a repository scope")
 @Examples({
         "make new repository:",
-        "\tset description of repository to \"My Repository\""
+        "\tset description of repository to \"My Repository\"",
+        "",
+        "# or:",
+        "",
+        "broadcast description of repository with name \"Test\""
 })
 @Since("1.0")
 
-public class ExprDescriptionOfRepository extends SimplePropertyExpression<Repository, String> {
+public class ExprDescriptionOfRepository extends SimplePropertyExpression<Object, String> {
 
     static {
         register(ExprDescriptionOfRepository.class, String.class,
-                "[the] description", "repositorybuilder");
+                "[the] [skron] description", "object");
     }
 
     @Override
-    public String convert(Repository repo) {
-        return repo.getDescription();
+    public String convert(Object repo) {
+        if (repo instanceof Repository) {
+            Repository r = (Repository) repo;
+            return r.getDescription();
+        } else if (repo instanceof GHRepository) {
+            GHRepository r = (GHRepository) repo;
+            return r.getDescription();
+        } else {
+            return null;
+        }
+
     }
 
     @Override
@@ -39,13 +53,19 @@ public class ExprDescriptionOfRepository extends SimplePropertyExpression<Reposi
 
     @Override
     public void change(Event e, Object[] delta, ChangeMode mode) {
-        for (Repository repo : getExpr().getArray(e)) {
+        for (Object repo : getExpr().getArray(e)) {
             switch (mode) {
                 case SET:
-                    repo.setDescription((String) delta[0]);
+                    if (repo instanceof Repository) {
+                        Repository r = (Repository) repo;
+                        r.setDescription((String) delta[0]);
+                    }
                     break;
                 case DELETE:
-                    repo.setDescription(null);
+                    if (repo instanceof Repository) {
+                        Repository r = (Repository) repo;
+                        r.setDescription(null);
+                    }
                     break;
                 default:
                     break;

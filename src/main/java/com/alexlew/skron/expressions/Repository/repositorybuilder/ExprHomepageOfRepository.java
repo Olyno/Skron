@@ -1,4 +1,4 @@
-package com.alexlew.skron.expressions.Repository;
+package com.alexlew.skron.expressions.Repository.repositorybuilder;
 
 import ch.njol.skript.classes.Changer.ChangeMode;
 import ch.njol.skript.doc.Description;
@@ -9,24 +9,24 @@ import ch.njol.skript.expressions.base.SimplePropertyExpression;
 import com.alexlew.skron.types.Repository;
 import org.bukkit.event.Event;
 
-@Name("Licence template of repository")
-@Description("Returns the licence template of a repository. Can be set in a repository builder scope")
+@Name("Home page of repository")
+@Description("Returns the home page of a repository. Can be set in a repository scope")
 @Examples({
         "make new repository:",
-        "\tset licence template of repository to \"afl-3.0\""
+        "\tset home page of repository to \"My home page link\""
 })
 @Since("1.0")
 
-public class ExprLicenceTemplateOfRepository extends SimplePropertyExpression<Repository, String> {
+public class ExprHomepageOfRepository extends SimplePropertyExpression<Repository, String> {
 
     static {
-        register(ExprLicenceTemplateOfRepository.class, String.class,
-                "[the] [skron] licence template", "repositorybuilder");
+        register(ExprHomepageOfRepository.class, String.class,
+                "[the] [skron] home page", "repositorybuilder");
     }
 
     @Override
     public String convert(Repository repo) {
-        return (String) repo.getLicenceTemplate();
+        return (String) repo.getHomepage();
     }
 
     @Override
@@ -42,10 +42,10 @@ public class ExprLicenceTemplateOfRepository extends SimplePropertyExpression<Re
         for (Repository repo : getExpr().getArray(e)) {
             switch (mode) {
                 case SET:
-                    repo.setLicenceTemplate((String) delta[0]);
+                    repo.setHomepage((String) delta[0]);
                     break;
                 case DELETE:
-                    repo.setLicenceTemplate(null);
+                    repo.setHomepage(null);
                     break;
                 default:
                     break;

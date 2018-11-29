@@ -6,6 +6,7 @@ import org.bukkit.event.Event;
 
 import ch.njol.skript.classes.Changer.ChangeMode;
 import ch.njol.skript.doc.*;
+import org.kohsuke.github.GHRepository;
 
 @Name("Name of repository")
 @Description("Returns the name of a repository. Can be set in a repository scope")
@@ -15,16 +16,25 @@ import ch.njol.skript.doc.*;
 })
 @Since("1.0")
 
-public class ExprNameOfRepository extends SimplePropertyExpression<Repository, String> {
+public class ExprNameOfRepository extends SimplePropertyExpression<Object, String> {
 
     static {
         register(ExprNameOfRepository.class, String.class,
-                "[the] name", "repositorybuilder");
+                "[the] [skron] name", "object");
     }
 
     @Override
-    public String convert(Repository repo) {
-        return repo.getName();
+    public String convert(Object repo) {
+        if (repo instanceof Repository) {
+            Repository r = (Repository) repo;
+            return r.getName();
+        } else if (repo instanceof GHRepository) {
+            GHRepository r = (GHRepository) repo;
+            return r.getName();
+        } else {
+            return null;
+        }
+
     }
 
     @Override
@@ -37,13 +47,19 @@ public class ExprNameOfRepository extends SimplePropertyExpression<Repository, S
 
     @Override
     public void change(Event e, Object[] delta, ChangeMode mode) {
-        for (Repository repo : getExpr().getArray(e)) {
+        for (Object repo : getExpr().getArray(e)) {
             switch (mode) {
                 case SET:
-                    repo.setName((String) delta[0]);
+                    if (repo instanceof Repository) {
+                        Repository r = (Repository) repo;
+                        r.setName((String) delta[0]);
+                    }
                     break;
                 case DELETE:
-                    repo.setName(null);
+                    if (repo instanceof Repository) {
+                        Repository r = (Repository) repo;
+                        r.setName(null);
+                    }
                     break;
                 default:
                     break;
