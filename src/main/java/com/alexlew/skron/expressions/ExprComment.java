@@ -1,4 +1,4 @@
-package com.alexlew.skron.expressions.issues;
+package com.alexlew.skron.expressions;
 
 
 import ch.njol.skript.Skript;
@@ -11,49 +11,48 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
+import com.alexlew.skron.scopes.ScopeNewComment;
 import com.alexlew.skron.scopes.ScopeNewIssue;
+import com.alexlew.skron.types.CommentType;
 import com.alexlew.skron.util.EffectSection;
 import org.bukkit.event.Event;
 import org.kohsuke.github.GHIssue;
 
-@Name("Issue expression")
-@Description("If it isn't inside an issue creation scope, this expression returns a new issue. " +
-        "If it is inside of an issue creation scope, it returns the issue that belongs to that scope.")
+@Name("Comment expression")
+@Description("If it isn't inside an comment creation scope, this expression returns a new comment. " +
+        "If it is inside of an comment creation scope, it returns the comment that belongs to that scope.")
 @Examples({
         "# outside a scope",
         "",
-        "set {_e} to a new issue",
+        "set {_e} to a new comment",
         "",
         "# or in a scope",
         "",
-        "make a new issue:",
-        "\tset the title of the issue to \"My Issue\"",
-        "\tset the body of the issue to \"Look my issue, it's beautiful!\"",
-        "\tset the assignee user of the issue to github user \"AlexLew95\"",
-        "\tadd the label \"test\" to labels of the issue",
-        "create last issue"
+        "make a new comment about issue {_issue}:",
+        "\tset body of comment to \"My issue!\"",
+        "comment"
 })
 @Since("1.0")
 
-public class ExprIssue extends SimpleExpression<GHIssue> {
+public class ExprComment extends SimpleExpression<CommentType> {
 
     static {
-        Skript.registerExpression(ExprIssue.class, GHIssue.class, ExpressionType.SIMPLE,
-                "[(the|an|[a] new)] issue");
+        Skript.registerExpression(ExprComment.class, CommentType.class, ExpressionType.SIMPLE,
+                "[(the|an|[a] new)] comment");
     }
 
     private Boolean scope = false;
 
     @Override
     public boolean init( Expression<?>[] expr, int matchedPattern, Kleenean isDelayed, SkriptParser.ParseResult parseResult ) {
-        scope = EffectSection.isCurrentSection(ScopeNewIssue.class);
+        scope = EffectSection.isCurrentSection(ScopeNewComment.class);
         return scope;
     }
 
     @Override
-    protected GHIssue[] get( Event e ) {
-        return new GHIssue[] {
-                new GHIssue()
+    protected CommentType[] get( Event e ) {
+        return new CommentType[]{
+                scope ? ScopeNewComment.lastCommentBuilder : new CommentType()
         };
     }
 
@@ -63,13 +62,13 @@ public class ExprIssue extends SimpleExpression<GHIssue> {
     }
 
     @Override
-    public Class<? extends GHIssue> getReturnType() {
-        return GHIssue.class;
+    public Class<? extends CommentType> getReturnType() {
+        return CommentType.class;
     }
 
     @Override
     public String toString( Event e, boolean debug ) {
-        return "the issue";
+        return "the comment";
     }
 
 }

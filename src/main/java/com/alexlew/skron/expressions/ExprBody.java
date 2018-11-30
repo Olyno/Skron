@@ -8,6 +8,7 @@ import ch.njol.skript.doc.Since;
 import ch.njol.skript.expressions.base.SimplePropertyExpression;
 import com.alexlew.skron.Skron;
 import com.alexlew.skron.effects.EffLogin;
+import com.alexlew.skron.types.CommentType;
 import com.alexlew.skron.types.Issue;
 import org.bukkit.event.Event;
 import org.kohsuke.github.GHIssue;
@@ -15,8 +16,8 @@ import org.kohsuke.github.GHIssueComment;
 
 import java.io.IOException;
 
-@Name("Body of Issue")
-@Description("Returns the body/content of an issue/comment. Can set the body of an issue.")
+@Name("Body of Issue/Comment")
+@Description("Returns the body/content of an issue/comment. Can set in a specific scope.")
 @Examples({
         "set {_body} to content of {_issue}"
 })
@@ -40,6 +41,9 @@ public class ExprBody extends SimplePropertyExpression<Object, String> {
         } else if (o instanceof GHIssueComment) {
             GHIssueComment comment = (GHIssueComment) o;
             return comment.getBody();
+        } else if (o instanceof CommentType) {
+            CommentType comment = (CommentType) o;
+            return comment.getBody();
         } else {
             return null;
         }
@@ -48,7 +52,7 @@ public class ExprBody extends SimplePropertyExpression<Object, String> {
 
     @Override
     public Class<?>[] acceptChange(final ChangeMode mode) {
-        if (mode == ChangeMode.SET) {
+        if (mode == ChangeMode.SET || mode == ChangeMode.DELETE) {
             return new Class[]{String.class};
         }
         return null;
@@ -71,11 +75,19 @@ public class ExprBody extends SimplePropertyExpression<Object, String> {
                         } else if (o instanceof Issue) {
                             Issue issue = (Issue) o;
                             issue.setBody((String) delta[0]);
+                        } else if (o instanceof CommentType) {
+                            CommentType comment = (CommentType) o;
+                            comment.setBody((String) delta[0]);
                         }
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
                     break;
+                case DELETE:
+                    if (o instanceof CommentType) {
+                        CommentType comment = (CommentType) o;
+                        comment.setBody(null);
+                    }
                 default:
                     break;
             }
