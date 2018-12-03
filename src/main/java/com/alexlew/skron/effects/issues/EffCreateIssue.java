@@ -9,12 +9,15 @@ import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
+import com.alexlew.skron.effects.EffCreateRepository;
 import com.alexlew.skron.effects.EffLogin;
 import com.alexlew.skron.scopes.ScopeNewIssue;
+import com.alexlew.skron.scopes.ScopeNewRepo;
 import com.alexlew.skron.types.Issue;
 import org.bukkit.event.Event;
 import org.kohsuke.github.GHIssue;
 import org.kohsuke.github.GHIssueBuilder;
+import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GHUser;
 
 import java.io.IOException;
@@ -50,8 +53,9 @@ public class EffCreateIssue extends Effect {
         Issue issue = issuebuilder.getSingle(e);
         try {
             ScopeNewIssue.lastIssue = issue;
-            lastIssue = EffLogin.account
-                    .getRepository(issue.getRepository().getName())
+            GHRepository repository = issue.getRepository() != null ? issue.getRepository()
+                    : EffCreateRepository.lastRepository;
+            lastIssue = repository
                     .createIssue(issue.getTitle())
                     .body(issue.getBody())
                     .label(issue.getLabel())

@@ -14,7 +14,7 @@ import java.util.Date;
 @Description("Returns the commit date of a commit")
 @Examples({
         "set {_date} to commit date of commit with sha \"d92702b0e9103ff5edb74e9137364fa01daffeea\"",
-        "broadcast %{_date}%"
+        "broadcast \"%{_date}%\""
 })
 @Since("1.0")
 

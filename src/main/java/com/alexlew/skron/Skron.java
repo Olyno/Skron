@@ -36,6 +36,10 @@ public class Skron extends JavaPlugin {
     }
 
     public SkriptAddon getAddonInstance() {
+        if (addon == null) {
+            addon = Skript.registerAddon(getInstance())
+                    .setLanguageFileDirectory("lang");
+        }
         return addon;
     }
 }

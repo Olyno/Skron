@@ -61,6 +61,33 @@ public class Commit {
                     }
 
                 }));
+
+        Classes.registerClass(new ClassInfo<GHCommitStatus>(GHCommitStatus.class, "commitstatus")
+                .user("commitstatus")
+                .name("commitstatus")
+                .parser(new Parser<GHCommitStatus>() {
+
+                    @Override
+                    public String getVariableNamePattern() {
+                        return ".+";
+                    }
+
+                    @Override
+                    public GHCommitStatus parse( String arg0, ParseContext arg1) {
+                        return null;
+                    }
+
+                    @Override
+                    public String toString( GHCommitStatus arg0, int arg1) {
+                        return null;
+                    }
+
+                    @Override
+                    public String toVariableNameString( GHCommitStatus arg0) {
+                        return null;
+                    }
+
+                }));
     }
 
     public Commit() {}

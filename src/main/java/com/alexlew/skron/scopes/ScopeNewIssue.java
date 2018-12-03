@@ -19,6 +19,7 @@ import org.kohsuke.github.GHIssue;
 @Examples({
         "make new issue:",
         "\tset the repository of the issue builder to repository \"My Repository\"",
+        "\tset the title of the issue builder to \"OwO a new issue\"",
         "\tset the body of the issue builder to \"Look my issue, how my issue is beautiful?\"",
         "\tset the label of the issue builder to \"Test\"",
         "\tset the assignee user of the issue builder to github user \"AlexLew95\"",

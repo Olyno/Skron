@@ -43,7 +43,7 @@ public class ExprTitleOfIssue extends SimplePropertyExpression<Object, String> {
     @Override
     public Class<?>[] acceptChange(final ChangeMode mode) {
         if (mode == ChangeMode.SET || mode == ChangeMode.DELETE) {
-            return new Class[]{GHIssue.class};
+            return new Class[]{Object.class};
         }
         return null;
     }
