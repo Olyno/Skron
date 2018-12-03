@@ -13,10 +13,10 @@ Skron uses [github-api](http://github-api.kohsuke.org) to work.
 | ------------- | ------------- | ------------- |
 | Repositories | <ul><li>- [x] </li></ul> | <ul><li>- [ ] </li></ul> |
 | Issues  | <ul><li>- [x] </li></ul> | <ul><li>- [x] </li></ul> |
-| Commits | <ul><li>- [x] </li></ul> | <ul><li>- [ ] </li></ul> |
+| Commits | <ul><li>- [x] </li></ul> | <ul><li>- [x] </li></ul> |
 | Gists | <ul><li>- [x] </li></ul> | <ul><li>- [ ] </li></ul> |
 | Milestone | <ul><li>- [x] </li></ul> | <ul><li>- [ ] </li></ul> |
-| PullRequests | <ul><li>- [ ] </li></ul> | <ul><li>- [ ] </li></ul> |
+| PullRequests | <ul><li>- [x] </li></ul> | <ul><li>- [ ] </li></ul> |
 | Releases | <ul><li>- [ ] </li></ul> | <ul><li>- [ ] </li></ul> |
 | Branch | <ul><li>- [ ] </li></ul> | <ul><li>- [ ] </li></ul> |
 | Team/Organization | <ul><li>- [ ] </li></ul> | <ul><li>- [ ] </li></ul> |
