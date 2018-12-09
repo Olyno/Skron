@@ -5,6 +5,7 @@ import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.Since;
 import ch.njol.skript.expressions.base.SimplePropertyExpression;
+import com.alexlew.skron.Skron;
 import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHCommitComment;
 import org.kohsuke.github.GHIssue;
@@ -37,6 +38,8 @@ public class ExprCommentsCountOfSomething extends SimplePropertyExpression<Objec
             PagedIterable<GHCommitComment> comments = commit.listComments();
             List<GHCommitComment> n = comments.asList();
             return n.size();
+        } else {
+            Skron.error(o + " is not a issue or commit to get the comment count: " + o.getClass());
         }
         return 0;
 

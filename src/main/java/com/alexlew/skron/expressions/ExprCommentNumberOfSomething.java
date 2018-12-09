@@ -89,6 +89,8 @@ public class ExprCommentNumberOfSomething extends SimpleExpression<Object> {
                     Skron.error("There are only " + com.size() + " comments, not " + number.getSingle(e));
                 }
 
+            } else {
+                Skron.error(object.getSingle(e) + " is not a issue or commit to get a comment from its id: " + object.getSingle(e).getClass());
             }
 
         } catch (IOException e1) {

@@ -5,6 +5,7 @@ import ch.njol.skript.doc.Examples;
 import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.Since;
 import ch.njol.skript.expressions.base.SimplePropertyExpression;
+import com.alexlew.skron.Skron;
 import org.kohsuke.github.*;
 
 import java.io.IOException;
@@ -38,6 +39,11 @@ public class ExprAuthorOfSomething extends SimplePropertyExpression<Object, GHUs
             } else if (o instanceof GHIssueComment) {
                 GHIssueComment commit = (GHIssueComment) o;
                 return commit.getUser();
+            } else if (o instanceof GHPullRequest) {
+                GHPullRequest pullrequest = (GHPullRequest) o;
+                return pullrequest.getMergedBy();
+            } else {
+                Skron.error(o + " is not a issue, commit, commit comment, issue comment or pull request to get its author: " + o.getClass());
             }
         } catch (IOException e) {
             e.printStackTrace();

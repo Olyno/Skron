@@ -11,6 +11,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
+import com.alexlew.skron.Skron;
 import org.bukkit.event.Event;
 import org.kohsuke.github.*;
 
@@ -57,6 +58,8 @@ public class ExprCommentsOfSomething extends SimpleExpression<Object> {
                 PagedIterable<GHCommitComment> comments = commit.listComments();
                 List<GHCommitComment> com = comments.asList();
                 return com.toArray(new GHCommitComment[com.size()]);
+            } else {
+                Skron.error(object.getSingle(e) + " is not a issue or commit to get its comments: " + object.getSingle(e).getClass());
             }
 
         } catch (IOException e1) {

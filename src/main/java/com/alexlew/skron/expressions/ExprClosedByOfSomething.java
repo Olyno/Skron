@@ -10,6 +10,7 @@ import ch.njol.skript.lang.ExpressionType;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
+import com.alexlew.skron.Skron;
 import org.bukkit.event.Event;
 import org.kohsuke.github.GHIssue;
 import org.kohsuke.github.GHPullRequest;
@@ -49,6 +50,8 @@ public class ExprClosedByOfSomething extends SimpleExpression<GHUser> {
                 } else if (object.getSingle(e) instanceof GHPullRequest) {
                     GHPullRequest pr = (GHPullRequest) object.getSingle(e);
                     return new GHUser[] {pr.getClosedBy()};
+                } else {
+                    Skron.error(object.getSingle(e) + " is not a issue or a pull request to get who closed it: " + object.getSingle(e).getClass());
                 }
             }
         } catch (IOException e1) {
@@ -69,6 +72,6 @@ public class ExprClosedByOfSomething extends SimpleExpression<GHUser> {
 
     @Override
     public String toString( Event e, boolean debug ) {
-        return "closed by ";
+        return "user who closed " + object.getSingle(e);
     }
 }
