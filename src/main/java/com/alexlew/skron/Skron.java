@@ -15,7 +15,7 @@ public class Skron extends JavaPlugin {
 
     public void onEnable() {
         try {
-            getAddonInstance().loadClasses("com.alexlew.skron", "effects", "events", "expressions", "scopes", "types");
+            getAddonInstance().loadClasses("com.alexlew.skron");
         } catch (IOException e) {
             e.printStackTrace();
         }
