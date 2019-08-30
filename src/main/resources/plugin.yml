@@ -2,6 +2,6 @@ name: Skron
 description: Connect github and skript!
 author: Olyno
 version: "1.0.0-nightly"
-main: com.olyno.Skron
+main: com.olyno.skron.Skron
 depend:
   - Skript
