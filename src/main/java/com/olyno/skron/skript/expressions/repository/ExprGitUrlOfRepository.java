@@ -7,29 +7,29 @@ import ch.njol.skript.doc.Since;
 import ch.njol.skript.expressions.base.SimplePropertyExpression;
 import org.kohsuke.github.GHRepository;
 
-@Name("Language of Repository")
-@Description("Returns the primary language of a repository.")
+@Name("Git URL of Repository")
+@Description("Returns the git url of a repository.")
 @Examples({
         ""
 })
 @Since("1.0.0")
 
-public class ExprLanguageOfRepository extends SimplePropertyExpression<GHRepository, String> {
+public class ExprGitUrlOfRepository extends SimplePropertyExpression<GHRepository, String> {
 
     static {
-        register(ExprLanguageOfRepository.class, String.class,
-                "language", "repository"
+        register(ExprGitUrlOfRepository.class, String.class,
+                "git [transport] url", "repository"
         );
     }
 
     @Override
     public String convert(GHRepository repository) {
-        return repository.getLanguage();
+        return repository.getGitTransportUrl();
     }
 
     @Override
     protected String getPropertyName() {
-        return "language";
+        return "git url";
     }
 
     @Override

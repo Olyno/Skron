@@ -1,4 +1,4 @@
-package com.olyno.skron.skript.expressions;
+package com.olyno.skron.skript.tests;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;

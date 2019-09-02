@@ -12,18 +12,18 @@ import ch.njol.util.Kleenean;
 import org.bukkit.event.Event;
 import org.kohsuke.github.GHRepository;
 
-@Name("Is Fork")
-@Description("Returns if repository is a fork or not.")
+@Name("Has Pull Access")
+@Description("Returns if repository has pull access or not.")
 @Examples({
         ""
 })
 @Since("1.0.0")
 
-public class CondIsFork extends Condition {
+public class CondHasPullAccess extends Condition {
 
     static {
-        Skript.registerCondition(CondIsFork.class,
-                "%repository% is fork"
+        Skript.registerCondition(CondHasPullAccess.class,
+                "%repository% has pull access"
         );
     }
 
@@ -38,12 +38,12 @@ public class CondIsFork extends Condition {
 
     @Override
     public boolean check(Event e) {
-        return repository.getSingle(e).isFork();
+        return repository.getSingle(e).hasPullAccess();
     }
 
     @Override
     public String toString(Event e, boolean debug) {
-        return repository.toString(e, debug) + " is a fork";
+        return repository.toString(e, debug) + " has pull access";
     }
 
 }

@@ -29,22 +29,17 @@ import org.bukkit.event.Event;
 })
 @Since("1.0.0")
 
-public class ExprSquashMergeOfRepositoryBuilder extends SimplePropertyExpression<Object, Boolean> {
+public class ExprSquashMergeOfRepositoryBuilder extends SimplePropertyExpression<RepositoryBuilder, Boolean> {
 
     static {
         register(ExprSquashMergeOfRepositoryBuilder.class, Boolean.class,
-                "[the] [repo[sitory]] squash merge state", "object"
+                "squash merge state", "repositorybuilder"
         );
     }
 
     @Override
-    public Boolean convert(Object repository) {
-        if (repository instanceof RepositoryBuilder) {
-            RepositoryBuilder repo = (RepositoryBuilder) repository;
-            return repo.allowSquashMerge();
-        } else {
-            return null;
-        }
+    public Boolean convert(RepositoryBuilder repository) {
+        return repository.allowSquashMerge();
     }
 
     @Override

@@ -29,22 +29,17 @@ import org.bukkit.event.Event;
 })
 @Since("1.0.0")
 
-public class ExprRebaseMergeOfRepositoryBuilder extends SimplePropertyExpression<Object, Boolean> {
+public class ExprRebaseMergeOfRepositoryBuilder extends SimplePropertyExpression<RepositoryBuilder, Boolean> {
 
     static {
         register(ExprRebaseMergeOfRepositoryBuilder.class, Boolean.class,
-                "[the] [repo[sitory]] rebase merge state", "object"
+                "rebase merge state", "repositorybuilder"
         );
     }
 
     @Override
-    public Boolean convert(Object repository) {
-        if (repository instanceof RepositoryBuilder) {
-            RepositoryBuilder repo = (RepositoryBuilder) repository;
-            return repo.allowRebaseMerge();
-        } else {
-            return null;
-        }
+    public Boolean convert(RepositoryBuilder repository) {
+        return repository.allowRebaseMerge();
     }
 
     @Override
@@ -69,6 +64,7 @@ public class ExprRebaseMergeOfRepositoryBuilder extends SimplePropertyExpression
                 case RESET:
                 case DELETE:
                     repository.allowRebaseMerge(true);
+                    break;
             }
         }
     }

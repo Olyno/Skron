@@ -29,22 +29,17 @@ import org.bukkit.event.Event;
 })
 @Since("1.0.0")
 
-public class ExprGitignoreTemplateOfRepositoryBuilder extends SimplePropertyExpression<Object, String> {
+public class ExprGitignoreTemplateOfRepositoryBuilder extends SimplePropertyExpression<RepositoryBuilder, String> {
 
     static {
         register(ExprGitignoreTemplateOfRepositoryBuilder.class, String.class,
-                "[the] [repo[sitory]] gitignore template", "object"
+                "git[ ]ignore template", "repositorybuilder"
         );
     }
 
     @Override
-    public String convert(Object repository) {
-        if (repository instanceof RepositoryBuilder) {
-            RepositoryBuilder repo = (RepositoryBuilder) repository;
-            return repo.getGitignoreTemplate();
-        } else {
-            return null;
-        }
+    public String convert(RepositoryBuilder repository) {
+        return repository.getGitignoreTemplate();
     }
 
     @Override
@@ -69,6 +64,7 @@ public class ExprGitignoreTemplateOfRepositoryBuilder extends SimplePropertyExpr
                 case RESET:
                 case DELETE:
                     repository.setGitignoreTemplate(null);
+                    break;
 
             }
         }

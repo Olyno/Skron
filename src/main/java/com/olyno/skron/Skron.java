@@ -15,20 +15,8 @@ import java.util.Set;
 
 public class Skron extends JavaPlugin {
 
-    static Skron instance;
+    public static Skron instance;
     SkriptAddon addon;
-
-    public static void error(String error) {
-        Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.RED + error);
-    }
-
-    public static void warning(String warning) {
-        Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.YELLOW + warning);
-    }
-
-    public static void success(String success) {
-        Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.GREEN + success);
-    }
 
     public void onEnable() {
 
@@ -79,6 +67,18 @@ public class Skron extends JavaPlugin {
                 }
         );
 
+    }
+
+    public static void error(String error) {
+        Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.RED + error);
+    }
+
+    public static void warning(String warning) {
+        Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.YELLOW + warning);
+    }
+
+    public static void success(String success) {
+        Bukkit.getServer().getConsoleSender().sendMessage(ChatColor.GREEN + success);
     }
 
 }

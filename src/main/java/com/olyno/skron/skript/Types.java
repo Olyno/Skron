@@ -7,8 +7,7 @@ import ch.njol.skript.expressions.base.EventValueExpression;
 import ch.njol.skript.lang.ParseContext;
 import ch.njol.skript.registrations.Classes;
 import com.olyno.skron.util.classes.RepositoryBuilder;
-import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.GitHub;
+import org.kohsuke.github.*;
 
 import java.io.IOException;
 
@@ -51,6 +50,44 @@ public class Types {
                             Skript.exception(ex, "Can't get the name of the github user.");
                         }
                         return null;
+                    }
+
+                }));
+
+        Classes.registerClass(new ClassInfo<>(GHUser.class, "githubuser")
+                .defaultExpression(new EventValueExpression<>(GHUser.class))
+                .user("(github? ?)?user")
+                .name("Github User")
+                .description("A github user.")
+                .since("1.0.0")
+                .parser(new Parser<GHUser>() {
+
+                    @Override
+                    public String getVariableNamePattern() {
+                        return ".+";
+                    }
+
+                    @Override
+                    public GHUser parse(String name, ParseContext arg1) {
+                        return null;
+                    }
+
+                    @Override
+                    public String toString(GHUser user, int arg1) {
+                        try {
+                            return user.getName();
+                        } catch (IOException e) {
+                            return null;
+                        }
+                    }
+
+                    @Override
+                    public String toVariableNameString(GHUser user) {
+                        try {
+                            return user.getName();
+                        } catch (IOException e) {
+                            return null;
+                        }
                     }
 
                 }));
@@ -111,6 +148,66 @@ public class Types {
                     @Override
                     public String toVariableNameString(RepositoryBuilder repository) {
                         return repository.getName();
+                    }
+
+                }));
+
+        Classes.registerClass(new ClassInfo<>(GHBranch.class, "branch")
+                .defaultExpression(new EventValueExpression<>(GHBranch.class))
+                .user("(repo(sitory)? ?)?branch")
+                .name("Repository Branch")
+                .description("A repository branch.")
+                .since("1.0.0")
+                .parser(new Parser<GHBranch>() {
+
+                    @Override
+                    public String getVariableNamePattern() {
+                        return ".+";
+                    }
+
+                    @Override
+                    public GHBranch parse(String name, ParseContext arg1) {
+                        return null;
+                    }
+
+                    @Override
+                    public String toString(GHBranch branch, int arg1) {
+                        return branch.getName();
+                    }
+
+                    @Override
+                    public String toVariableNameString(GHBranch branch) {
+                        return branch.getName();
+                    }
+
+                }));
+
+        Classes.registerClass(new ClassInfo<>(GHLabel.class, "label")
+                .defaultExpression(new EventValueExpression<>(GHLabel.class))
+                .user("(repo(sitory)? ?)?label")
+                .name("Repository Label")
+                .description("A repository label.")
+                .since("1.0.0")
+                .parser(new Parser<GHLabel>() {
+
+                    @Override
+                    public String getVariableNamePattern() {
+                        return ".+";
+                    }
+
+                    @Override
+                    public GHLabel parse(String name, ParseContext arg1) {
+                        return null;
+                    }
+
+                    @Override
+                    public String toString(GHLabel label, int arg1) {
+                        return label.getName();
+                    }
+
+                    @Override
+                    public String toVariableNameString(GHLabel label) {
+                        return label.getName();
                     }
 
                 }));

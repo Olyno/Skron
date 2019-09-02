@@ -29,7 +29,7 @@ public class ExprDefaultBranchOfRepository extends SimplePropertyExpression<GHRe
 
     static {
         register(ExprDefaultBranchOfRepository.class, String.class,
-                "[the] default branch", "repository"
+                "default branch", "repository"
         );
     }
 
@@ -67,7 +67,7 @@ public class ExprDefaultBranchOfRepository extends SimplePropertyExpression<GHRe
 
     @Override
     protected String getPropertyName() {
-        return "description";
+        return "default branch";
     }
 
     @Override

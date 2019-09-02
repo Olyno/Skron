@@ -24,7 +24,7 @@ public class ExprNameOfRepository extends SimplePropertyExpression<Object, Strin
 
     static {
         register(ExprNameOfRepository.class, String.class,
-                "[the] repo[sitory] name", "object"
+                "repo[sitory] name", "object"
         );
     }
 

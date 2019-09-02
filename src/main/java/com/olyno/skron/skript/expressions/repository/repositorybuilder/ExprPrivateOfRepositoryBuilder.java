@@ -29,22 +29,17 @@ import org.bukkit.event.Event;
 })
 @Since("1.0.0")
 
-public class ExprPrivateOfRepositoryBuilder extends SimplePropertyExpression<Object, Boolean> {
+public class ExprPrivateOfRepositoryBuilder extends SimplePropertyExpression<RepositoryBuilder, Boolean> {
 
     static {
         register(ExprPrivateOfRepositoryBuilder.class, Boolean.class,
-                "[the] [repo[sitory]] private state", "object"
+                "private state", "repositorybuilder"
         );
     }
 
     @Override
-    public Boolean convert(Object repository) {
-        if (repository instanceof RepositoryBuilder) {
-            RepositoryBuilder repo = (RepositoryBuilder) repository;
-            return repo.isPrivate();
-        } else {
-            return null;
-        }
+    public Boolean convert(RepositoryBuilder repository) {
+        return repository.isPrivate();
     }
 
     @Override
@@ -69,6 +64,7 @@ public class ExprPrivateOfRepositoryBuilder extends SimplePropertyExpression<Obj
                 case RESET:
                 case DELETE:
                     repository.isPrivate(true);
+                    break;
             }
         }
     }

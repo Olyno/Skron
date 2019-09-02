@@ -7,29 +7,28 @@ import ch.njol.skript.doc.Name;
 import ch.njol.skript.doc.Since;
 import ch.njol.skript.expressions.base.SimplePropertyExpression;
 import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.GHUser;
 
 import java.io.IOException;
 
-@Name("Owner of Repository")
-@Description("Returns owner of a repository.")
+@Name("Parent of Repository")
+@Description("Returns the parent of a repository. The repository must be a fork.")
 @Examples({
         ""
 })
 @Since("1.0.0")
 
-public class ExprOwnerOfRepository extends SimplePropertyExpression<GHRepository, GHUser> {
+public class ExprParentOfRepository extends SimplePropertyExpression<GHRepository, GHRepository> {
 
     static {
-        register(ExprOwnerOfRepository.class, GHUser.class,
-                "repo[sitory] owner", "repository"
+        register(ExprParentOfRepository.class, GHRepository.class,
+                "parent", "repository"
         );
     }
 
     @Override
-    public GHUser convert(GHRepository repository) {
+    public GHRepository convert(GHRepository repository) {
         try {
-            return repository.getOwner();
+            return repository.getParent();
         } catch (IOException ex) {
             Skript.exception(ex);
         }
@@ -38,11 +37,11 @@ public class ExprOwnerOfRepository extends SimplePropertyExpression<GHRepository
 
     @Override
     protected String getPropertyName() {
-        return "repository owner";
+        return "parent";
     }
 
     @Override
-    public Class<? extends GHUser> getReturnType() {
-        return GHUser.class;
+    public Class<? extends GHRepository> getReturnType() {
+        return GHRepository.class;
     }
 }

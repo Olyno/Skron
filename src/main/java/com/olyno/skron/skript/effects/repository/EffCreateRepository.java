@@ -1,4 +1,4 @@
-package com.olyno.skron.skript.effects;
+package com.olyno.skron.skript.effects.repository;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.doc.Description;
@@ -9,6 +9,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser;
 import ch.njol.util.Kleenean;
 import com.olyno.skron.Skron;
+import com.olyno.skron.skript.effects.EffLogin;
 import com.olyno.skron.skript.scopes.ScopeRepositoryBuilderCreation;
 import com.olyno.skron.util.AsyncEffect;
 import com.olyno.skron.util.classes.RepositoryBuilder;
@@ -16,11 +17,16 @@ import org.bukkit.event.Event;
 import org.kohsuke.github.GitHub;
 
 import java.io.IOException;
+import java.util.concurrent.CompletionException;
 
 @Name("Create Repository")
 @Description("Create a repository.")
 @Examples({
-        ""
+        "command create:\n" +
+                "\ttrigger:\n" +
+                "\t\tmake new repository named \"test\":\n" +
+                "\t\t\tset description of repository to \"this a debug message\"\n" +
+                "\t\tcreate repository \"test\""
 })
 @Since("1.0.0")
 
@@ -49,28 +55,30 @@ public class EffCreateRepository extends AsyncEffect {
         GitHub user = account != null ? account.getSingle(e) : EffLogin.accounts.values().iterator().next();
         RepositoryBuilder builder = ScopeRepositoryBuilderCreation.repositoriesBuilder.getOrDefault(name, new RepositoryBuilder(name));
 
-        try {
-
-            user.createRepository(builder.getName())
-                    .description(builder.getDescription())
-                    .autoInit(builder.autoInit())
-                    .allowMergeCommit(builder.allowMergeCommit())
-                    .allowRebaseMerge(builder.allowRebaseMerge())
-                    .allowSquashMerge(builder.allowSquashMerge())
-                    .downloads(builder.hasDownloads())
-                    .issues(builder.hasIssues())
-                    .private_(builder.isPrivate())
-                    .gitignoreTemplate(builder.getGitignoreTemplate())
-                    .wiki(builder.hasWiki())
-                    .create();
-
-        } catch (IOException ex) {
+        executeCode(e, () -> {
             try {
-                Skron.error("A repository with name \"" + name + "\" already exists on the account \"" + user.getMyself().getName() + "\". Can't create this repository.");
-            } catch (IOException exc) {
-                Skript.exception(exc);
+
+                user.createRepository(builder.getName())
+                        .description(builder.getDescription())
+                        .autoInit(builder.autoInit())
+                        .allowMergeCommit(builder.allowMergeCommit())
+                        .allowRebaseMerge(builder.allowRebaseMerge())
+                        .allowSquashMerge(builder.allowSquashMerge())
+                        .downloads(builder.hasDownloads())
+                        .issues(builder.hasIssues())
+                        .private_(builder.isPrivate())
+                        .gitignoreTemplate(builder.getGitignoreTemplate())
+                        .wiki(builder.hasWiki())
+                        .create();
+
+            } catch (IOException ex) {
+                try {
+                    Skron.error("A repository with name \"" + name + "\" already exists on the account \"" + user.getMyself().getName() + "\". Can't create this repository.");
+                } catch (IOException exc) {
+                    throw new CompletionException(exc);
+                }
             }
-        }
+        });
 
     }
 

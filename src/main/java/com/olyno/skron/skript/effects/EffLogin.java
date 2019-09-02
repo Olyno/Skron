@@ -15,11 +15,13 @@ import org.kohsuke.github.GitHub;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.concurrent.CompletionException;
 
 @Name("Login to Github")
 @Description("Login to your github account.")
 @Examples({
-        "login to github account \"test\" with password \"abc123\""
+        "on skript load:\n" +
+                "\tlogin to github account \"test\" with oauth \"abc123\""
 })
 @Since("1.0.0")
 
@@ -51,19 +53,21 @@ public class EffLogin extends AsyncEffect {
     protected void execute(Event e) {
         String name = username.getSingle(e);
         String pass = password.getSingle(e);
-        try {
-            GitHub user;
-            if (isOauth) {
-                user = GitHub.connectUsingOAuth(pass);
-            } else {
-                user = GitHub.connectUsingPassword(name, pass);
-            }
-            accounts.put(name, user);
-            new OnLogin(user);
+        executeCode(e, () -> {
+            try {
+                GitHub user;
+                if (isOauth) {
+                    user = GitHub.connectUsingOAuth(pass);
+                } else {
+                    user = GitHub.connectUsingPassword(name, pass);
+                }
+                accounts.put(name, user);
+                new OnLogin(user);
 
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+            } catch (IOException ex) {
+                throw new CompletionException(ex);
+            }
+        });
     }
 
     @Override

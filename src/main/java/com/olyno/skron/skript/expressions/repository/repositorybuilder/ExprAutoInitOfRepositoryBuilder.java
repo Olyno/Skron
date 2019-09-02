@@ -29,22 +29,17 @@ import org.bukkit.event.Event;
 })
 @Since("1.0.0")
 
-public class ExprAutoInitOfRepositoryBuilder extends SimplePropertyExpression<Object, Boolean> {
+public class ExprAutoInitOfRepositoryBuilder extends SimplePropertyExpression<RepositoryBuilder, Boolean> {
 
     static {
         register(ExprAutoInitOfRepositoryBuilder.class, Boolean.class,
-                "[the] [repo[sitory]] auto[ ]init state", "object"
+                "auto[ ]init state", "repositorybuilder"
         );
     }
 
     @Override
-    public Boolean convert(Object repository) {
-        if (repository instanceof RepositoryBuilder) {
-            RepositoryBuilder repo = (RepositoryBuilder) repository;
-            return repo.autoInit();
-        } else {
-            return null;
-        }
+    public Boolean convert(RepositoryBuilder repository) {
+        return repository.autoInit();
     }
 
     @Override
@@ -69,6 +64,7 @@ public class ExprAutoInitOfRepositoryBuilder extends SimplePropertyExpression<Ob
                 case RESET:
                 case DELETE:
                     repository.autoInit(true);
+                    break;
             }
         }
     }

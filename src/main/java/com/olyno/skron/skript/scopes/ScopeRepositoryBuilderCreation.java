@@ -36,7 +36,7 @@ public class ScopeRepositoryBuilderCreation extends EffectSection {
 
     static {
         Skript.registerCondition(ScopeRepositoryBuilderCreation.class,
-                "(make|do|create) [new] repo[sitory] [builder] ((with|as) name|named) %string%"
+                "(make|do|create) [new] repo[sitory] [builder] [((with|as) name|named)] %string%"
         );
     }
 

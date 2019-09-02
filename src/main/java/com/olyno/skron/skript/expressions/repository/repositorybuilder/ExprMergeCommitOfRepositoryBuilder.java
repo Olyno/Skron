@@ -29,22 +29,17 @@ import org.bukkit.event.Event;
 })
 @Since("1.0.0")
 
-public class ExprMergeCommitOfRepositoryBuilder extends SimplePropertyExpression<Object, Boolean> {
+public class ExprMergeCommitOfRepositoryBuilder extends SimplePropertyExpression<RepositoryBuilder, Boolean> {
 
     static {
         register(ExprMergeCommitOfRepositoryBuilder.class, Boolean.class,
-                "[the] [repo[sitory]] merge commit[s] state", "object"
+                "merge commit[s] state", "object"
         );
     }
 
     @Override
-    public Boolean convert(Object repository) {
-        if (repository instanceof RepositoryBuilder) {
-            RepositoryBuilder repo = (RepositoryBuilder) repository;
-            return repo.allowMergeCommit();
-        } else {
-            return null;
-        }
+    public Boolean convert(RepositoryBuilder repository) {
+        return repository.allowMergeCommit();
     }
 
     @Override
@@ -69,6 +64,7 @@ public class ExprMergeCommitOfRepositoryBuilder extends SimplePropertyExpression
                 case RESET:
                 case DELETE:
                     repository.allowMergeCommit(true);
+                    break;
             }
         }
     }
